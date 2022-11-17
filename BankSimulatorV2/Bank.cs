@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -252,6 +253,44 @@ namespace BankSimulatorV2
         public List<Customer> cloneCustomerList()
         {
             return customersList;
+        }
+        public void printMemberList()
+        {
+            if (customersList.Count == 0)
+            {
+                Console.WriteLine("---------------------------");
+                Console.WriteLine("No Customer added");
+                Console.WriteLine("---------------------------");
+            }
+            else
+            {
+                foreach (var customers in customersList)
+                {
+                    Console.WriteLine(customers);
+                }
+            }
+        }
+        public bool VerifyUserSignIn(int checkIdNumber, bool verified)
+        {           
+            foreach (var customer in customersList)
+            {
+                if (customer.IdNumber == checkIdNumber)
+                {
+                    verified = true;
+                }
+            }
+            return verified;
+        }
+        public bool VerifyUserSignIn(string checkPassword, bool verified)
+        {            
+            foreach (var customer in customersList)
+            {
+                if (customer.Password == checkPassword)
+                {
+                    verified = true;
+                }
+            }
+            return verified;
         }
     }
 }

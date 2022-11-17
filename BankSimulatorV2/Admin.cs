@@ -21,6 +21,8 @@ namespace BankSimulatorV2
             AdminMainMenu();
         }
 
+
+
         public void GetMeny(int userId)
         {
             if (id == userId)
