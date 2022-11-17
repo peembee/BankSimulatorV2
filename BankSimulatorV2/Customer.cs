@@ -47,7 +47,22 @@ namespace BankSimulatorV2
 
         public void AddNewBankAccount()
         {
-
+            string accountName = "";
+            int accountNumber;
+            double balance;
+            Console.Clear();
+            Console.Write("Account name: ");
+            accountName = Console.ReadLine();
+            Console.Clear();
+            Console.Write("Account number: ");
+            accountNumber = Convert.ToInt32(Console.ReadLine);
+            Console.Clear();
+            Console.Write("Account balance: ");
+            balance = Convert.ToInt32(Console.ReadLine);
+            Console.Clear();
+            Console.WriteLine("New account has been added");
+            BankAcc.Add(new BankAccount(accountName, accountNumber, balance));
+            System.Threading.Thread.Sleep(1000);
         }
         public void AddSavingAccount()
         {
