@@ -8,8 +8,20 @@ namespace BankSimulatorV2
 {
     internal class Customer : User
     {
-        public string Password { get; set; }
-        public int IdNumber { get; set; }
+        public string Password
+        {
+            get
+            { return password;}
+            set
+            { password = value; }
+        }
+        public int IdNumber
+        {
+            get
+            { return id; }
+            set
+            { id = value; }
+        }
 
         public int bankLoan = 0;
         public bool lockedOut = false;
