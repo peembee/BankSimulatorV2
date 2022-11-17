@@ -37,6 +37,7 @@ namespace BankSimulatorV2
 
             while (true)
             {
+                Console.Clear();
                 Console.CursorVisible = false;
                 Console.WriteLine("--------------");
                 Console.WriteLine("Signed in");
@@ -211,7 +212,14 @@ namespace BankSimulatorV2
 
         private void addBankAccount()
         {
-
+            foreach(var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.AddNewBankAccount();
+                    break;
+                }
+            }
         }
 
         private void addSaveAccount()
