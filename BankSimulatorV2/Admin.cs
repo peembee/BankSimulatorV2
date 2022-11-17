@@ -109,62 +109,33 @@ namespace BankSimulatorV2
         public override void PrintInfo()
         {
             Console.Clear();
-            var customerList = bank.cloneCustomerList();
-            if (customerList.Count == 0)
-            {
-                Console.WriteLine("---------------------------");
-                Console.WriteLine("No Customer added");
-                Console.WriteLine("---------------------------");
-            }
-            else
-            {
-                Console.WriteLine("---------------------------");
-                foreach (var cust in customerList)
-                {
-                    Console.WriteLine(cust);
-                    Console.WriteLine("---------------------------");
-                }                
-            }
+            bank.printMemberList();
             Console.WriteLine("\nkey for menu..");
             Console.ReadKey();
         }
         public bool VerifyUser(int getId)
         {
             bool verified = false;
-            var clonedList = bank.cloneCustomerList();
             if (id == getId)
             {
                 verified = true;
             }
-            else
-            {
-                foreach (var customer in clonedList)
-                {
-                    if (customer.IdNumber == getId)
-                    {
-                        verified = true;
-                    }
-                }
+            else if(bank.VerifyUserSignIn(getId, verified) == true)
+            {                
+                    verified = true;                
             }
             return verified;
         }
         public bool VerifyUser(string getPassword)
         {
             bool verified = false;
-            var clonedList = bank.cloneCustomerList();
             if (password == getPassword)
             {
                 verified = true;
             }
-            else
-            {
-                foreach (var customer in clonedList)
-                {
-                    if (customer.Password == getPassword)
-                    {
-                        verified = true;
-                    }
-                }
+            else if(bank.VerifyUserSignIn(getPassword, verified) == true)
+            {           
+                    verified = true;              
             }
             return verified;
         }
