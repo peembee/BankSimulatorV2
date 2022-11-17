@@ -110,34 +110,60 @@ namespace BankSimulatorV2
 
         public override void PrintInfo()
         {
-            Console.Clear();
-            bank.printMemberList();
+            var customerList = bank.cloneCustomerList();
+            if (customerList.Count == 0)
+            {
+                Console.WriteLine("No Customer added");
+            }
+            else
+            {
+                Console.WriteLine("---------------------------");
+                foreach (var cust in customerList)
+                {
+                    Console.WriteLine("\n" + cust);
+                }
+                Console.WriteLine("---------------------------");
+            }
             Console.WriteLine("\nkey for menu..");
             Console.ReadKey();
         }
         public bool VerifyUser(int getId)
         {
             bool verified = false;
+            var clonedList = bank.cloneCustomerList();
             if (id == getId)
             {
                 verified = true;
             }
-            else if(bank.VerifyUserSignIn(getId, verified) == true)
-            {                
-                    verified = true;                
+            else
+            {
+                foreach (var customer in clonedList)
+                {
+                    if (customer.IdNumber == getId)
+                    {
+                        verified = true;
+                    }
+                }
             }
             return verified;
         }
         public bool VerifyUser(string getPassword)
         {
             bool verified = false;
+            var clonedList = bank.cloneCustomerList();
             if (password == getPassword)
             {
                 verified = true;
             }
-            else if(bank.VerifyUserSignIn(getPassword, verified) == true)
-            {           
-                    verified = true;              
+            else
+            {
+                foreach (var customer in clonedList)
+                {
+                    if (customer.Password == getPassword)
+                    {
+                        verified = true;
+                    }
+                }
             }
             return verified;
         }
