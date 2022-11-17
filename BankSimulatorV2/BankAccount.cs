@@ -13,7 +13,12 @@ namespace BankSimulatorV2
         public int BankAccountNumber { get; set; }
         public double Balance { get; set; }
         private string saveAllTransActions = "";
-
+        public BankAccount(string BankAccountName, int BankAccountnumber, double Balance)
+        {
+            this.BankAccountName = BankAccountName;
+            this.BankAccountNumber = BankAccountnumber;
+            this.Balance = Balance;
+        }
         private void saveTransaction(double transaction)
         {
             string incomingTransaction = "Transaction: " + numberOfTransactions + ". Account: " + BankAccountName + ". " + ". Account Number: " + BankAccountNumber + ". " + DateTime.Now + ": + " + transaction + "\n";
