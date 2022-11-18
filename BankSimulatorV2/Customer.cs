@@ -8,6 +8,24 @@ namespace BankSimulatorV2
 {
     internal class Customer : User
     {
+        public int bankLoan = 0;
+        public bool debtToBank = false;
+        public string adress;
+        public double wallet;
+        private bool lockedOut = false;
+        private int passwordTries = 3;
+       
+        public bool LockedOut
+        {
+            get
+            {
+                return lockedOut;
+            }
+            set
+            {
+                lockedOut = value;
+            }
+        }
         public string Password
         {
             get
@@ -23,11 +41,7 @@ namespace BankSimulatorV2
             { id = value; }
         }
 
-        public int bankLoan = 0;
-        public bool lockedOut = false;
-        public bool debtToBank = false;
-        public string adress;
-        public double wallet;
+
 
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
@@ -44,7 +58,17 @@ namespace BankSimulatorV2
         List<SavingAccount> SaveAcc = new List<SavingAccount>();
 
 
+        public int PasswordTries()
+        {
+            passwordTries--;
+            if (passwordTries <= 0)
+            {
+                passwordTries = 0;
+                lockedOut = true;
 
+            }
+            return passwordTries;
+        }
         public void AddNewBankAccount()
         {
             string accountName = "";
@@ -95,6 +119,8 @@ namespace BankSimulatorV2
                 Console.ReadLine();
             }
         }
+
+
         public override string ToString()
         {
             return Name + ". " + Age + " Old" + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;
