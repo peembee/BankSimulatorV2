@@ -42,7 +42,7 @@ namespace BankSimulatorV2
 
         public override string ToString()
         {
-            return "Account: " + BankAccountName + ". Account Number: " + BankAccountNumber + ". Balance: " + Balance;
+            return "Account: " + BankAccountName + "\n Account Number: " + BankAccountNumber + "\nBalance: " + Balance;
         }
     }
 }

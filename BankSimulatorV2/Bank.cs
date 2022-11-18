@@ -224,7 +224,13 @@ namespace BankSimulatorV2
 
         private void addSaveAccount()
         {
-
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.AddNewBankAccount();
+                }
+            }
 
         }
 
