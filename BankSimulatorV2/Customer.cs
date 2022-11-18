@@ -50,6 +50,7 @@ namespace BankSimulatorV2
             string accountName = "";
             int accountNumber = 0;
             double balance = 0;
+            Console.Clear();
             Console.Write("Account name: ");
             accountName = Console.ReadLine();
             Console.Clear();
