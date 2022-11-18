@@ -273,6 +273,11 @@ namespace BankSimulatorV2
         public List<Customer> cloneCustomerList()
         {
             return customersList;
-        }        
+        }
+        public List<Customer> GetUpdatedCustList(List<Customer> updatedList)
+        {
+            customersList = updatedList;
+            return customersList;
+        }
     }
 }
