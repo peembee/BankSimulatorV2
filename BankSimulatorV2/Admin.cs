@@ -174,6 +174,8 @@ namespace BankSimulatorV2
         public bool VerifyUser(int getId)
         {
             bool verified = false;
+            string messageLockedOut = "You have been locked from the system, Contact Admin:\n" + ToString();
+            
             var clonedList = bank.cloneCustomerList();
             if (id == getId)
             {
@@ -185,7 +187,15 @@ namespace BankSimulatorV2
                 {
                     if (customer.IdNumber == getId)
                     {
-                        verified = true;
+                        if (customer.LockedOut == false)
+                        {
+                            verified = true;
+                        }
+                        else
+                        {
+                            verified = false;
+                            Console.WriteLine(messageLockedOut);
+                        }
                     }
                 }
             }
