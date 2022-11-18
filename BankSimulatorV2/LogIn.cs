@@ -149,8 +149,6 @@ namespace BankSimulatorV2
                     }
                     if (admin.VerifyUser(id) == true)
                     {
-                        string getUserSignInTries = admin.WrongPasswordtransfer(id);
-                        Console.WriteLine(getUserSignInTries);
                         break;
                     }
                     else
@@ -161,7 +159,8 @@ namespace BankSimulatorV2
                 }
 
                 while (true)
-                {
+                {                    
+                    Console.WriteLine(admin.WrongPasswordtransfer(id));
                     Console.Write("Enter Password: ");
                     password = Console.ReadLine();
                     if (admin.VerifyUser(password) == true)
