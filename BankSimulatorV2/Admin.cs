@@ -74,13 +74,13 @@ namespace BankSimulatorV2
         }
         private void unLockCustomer()
         {
-            bool noLockedCustomer = true;
+            bool lockedCustomer = false;
             string getId = "";
             var updateCustomerList = bank.cloneCustomerList();
             while (true)
             {
                 bool breakLoop = false;
-                
+
                 Console.Clear();
                 Console.WriteLine("Locked Customer:");
                 foreach (var customer in updateCustomerList)
@@ -88,10 +88,10 @@ namespace BankSimulatorV2
                     if (customer.LockedOut == true)
                     {
                         Console.WriteLine(customer);
-                        noLockedCustomer = false;
+                        lockedCustomer = true;
                     }
                 }
-                if (noLockedCustomer == true)
+                if (lockedCustomer == false)
                 {
                     Console.Clear();
                     Console.WriteLine("No Customer is locked at the moment..");
@@ -101,7 +101,7 @@ namespace BankSimulatorV2
                 else
                 {
                     Console.WriteLine("---------------------\n");
-                    
+
                     Console.WriteLine("Exit: press 0");
                     Console.Write("Unlock Customer: Enter customerId: ");
                     getId = Console.ReadLine();
@@ -133,7 +133,7 @@ namespace BankSimulatorV2
                     }
                 }
             }
-            if (getId != "0" && noLockedCustomer == false)
+            if (getId != "0" && lockedCustomer == true)
             {
                 bank.GetUpdatedCustList(updateCustomerList);
                 Console.Clear();
@@ -195,19 +195,20 @@ namespace BankSimulatorV2
         public bool VerifyUser(int getId)
         {
             bool verified = false;
-            string messageLockedOut = "You have been locked from the system, Contact Admin:\n" + ToString();
-
+            bool noUserId = true;
+            string messageLockedOut = "You have been locked from the system, Contact Admin:\n" + ToString();            
             var clonedList = bank.cloneCustomerList();
-            if (id == getId)
+            if (id == getId) // AdminMenu will be called
             {
                 verified = true;
             }
-            else
+            else 
             {
                 foreach (var customer in clonedList)
                 {
                     if (customer.IdNumber == getId)
                     {
+                        noUserId = false;
                         if (customer.LockedOut == false)
                         {
                             verified = true;
@@ -216,8 +217,14 @@ namespace BankSimulatorV2
                         {
                             verified = false;
                             Console.WriteLine(messageLockedOut);
+                            Console.ReadKey();
+                            break;
                         }
                     }
+                }
+                if(noUserId == true)
+                {
+                    Console.WriteLine("Id: " + getId + " does not exist");
                 }
             }
             return verified;
@@ -235,15 +242,15 @@ namespace BankSimulatorV2
                 foreach (var customer in clonedList)
                 {
                     if (customer.Password == getPassword)
-                    {
-                        verified = true;
+                    {                       
+                            verified = true;                        
                     }
                 }
             }
             return verified;
         }
         public string WrongPasswordtransfer(int getId, bool readPasswordTries = false)
-        {
+        {         
             int userPasswordTries = 0;
             string returnLogInInfo = "";
             var updateCustomerList = bank.cloneCustomerList();
@@ -257,16 +264,21 @@ namespace BankSimulatorV2
                 {
                     if (customer.IdNumber == getId)
                     {
-                        if (readPasswordTries == true) // We only want to see how many tries user has left
+                        if (readPasswordTries == false)
                         {
-                            returnLogInInfo = "You have " + userPasswordTries + " attempts left\n"; 
+                            userPasswordTries = customer.PasswordTries();
                         }
                         else
                         {
-                            userPasswordTries = customer.PasswordTries(); // this will decrease customers passwordtries. 
+                            userPasswordTries = customer.PasswordTries(true);
                         }
-                    }
-                        break;                    
+                        returnLogInInfo = "You have " + userPasswordTries + " attempts left\n";
+                        if (userPasswordTries == 0)
+                        {
+                            returnLogInInfo = "You been locked. Please Contact Admin:\n" + ToString();
+                        }
+                        break;
+                    }                    
                 }
             }
             bank.GetUpdatedCustList(updateCustomerList);

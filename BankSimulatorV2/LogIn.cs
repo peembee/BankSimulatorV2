@@ -151,16 +151,10 @@ namespace BankSimulatorV2
                     {
                         break;
                     }
-                    else
-                    {
-                        Console.WriteLine("Did not find any ID");
-                        System.Threading.Thread.Sleep(1000);
-                    }
                 }
-
-                while (true)
+                while (admin.VerifyUser(id) == true)
                 {                    
-                    Console.WriteLine(admin.WrongPasswordtransfer(id, true)); // getting data about the passwordtries.
+                    Console.WriteLine(admin.WrongPasswordtransfer(id, true)); // Only read passwordTries.
                     Console.Write("Enter Password: ");
                     password = Console.ReadLine();
                     if (admin.VerifyUser(password) == true)
@@ -170,7 +164,7 @@ namespace BankSimulatorV2
                     }
                     else
                     {
-                        admin.WrongPasswordtransfer(id); // customers password tries will now decrease with 1.
+                        admin.WrongPasswordtransfer(id);
                     }
                 }
             }
