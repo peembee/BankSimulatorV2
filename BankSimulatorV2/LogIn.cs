@@ -169,9 +169,5 @@ namespace BankSimulatorV2
                 }
             }
         }
-        private void displayUserisLocked()
-        {
-
-        }
     }
 }

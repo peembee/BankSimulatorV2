@@ -87,7 +87,9 @@ namespace BankSimulatorV2
                 {
                     if (customer.LockedOut == true)
                     {
+                        Console.WriteLine("------------------");
                         Console.WriteLine(customer);
+                        Console.WriteLine("------------------");
                         lockedCustomer = true;
                     }
                 }
@@ -100,8 +102,6 @@ namespace BankSimulatorV2
                 }
                 else
                 {
-                    Console.WriteLine("---------------------\n");
-
                     Console.WriteLine("Exit: press 0");
                     Console.Write("Unlock Customer: Enter customerId: ");
                     getId = Console.ReadLine();
@@ -250,7 +250,8 @@ namespace BankSimulatorV2
             return verified;
         }
         public string WrongPasswordtransfer(int getId, bool readPasswordTries = false)
-        {         
+        {
+            Console.Clear();
             int userPasswordTries = 0;
             string returnLogInInfo = "";
             var updateCustomerList = bank.cloneCustomerList();
@@ -272,7 +273,7 @@ namespace BankSimulatorV2
                         {
                             userPasswordTries = customer.PasswordTries(true);
                         }
-                        returnLogInInfo = "You have " + userPasswordTries + " attempts left\n";
+                        returnLogInInfo = "You have " + userPasswordTries + " attempts to Sign In";
                         if (userPasswordTries == 0)
                         {
                             returnLogInInfo = "You been locked. Please Contact Admin:\n" + ToString();
