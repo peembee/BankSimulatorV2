@@ -11,6 +11,7 @@ namespace BankSimulatorV2
     {
         private int userSignInId;
         string AdminInfo = "";
+        int menuSelect;
 
 
         List<Customer> customersList = new List<Customer>();
@@ -18,7 +19,6 @@ namespace BankSimulatorV2
         public void Menu(int userId)
         {
             userSignInId = userId;
-            int menuSelect = 0;
             string[] menuOptions = new string[]
             { "Sign Out",
               "Add New Bank-Account",
@@ -252,7 +252,13 @@ namespace BankSimulatorV2
 
         private void viewAllBankAndSavingAccounts()
         {
-
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.DisplayAllBankAccount();
+                }
+            }
         }
         private void viewAdminInfo(string getAdminInfo)
         {
