@@ -74,7 +74,31 @@ namespace BankSimulatorV2
         }
         private void unLockCustomer()
         {
-
+            string getId = "";
+            var updateCustomerList = bank.cloneCustomerList();
+            Console.WriteLine("Locked Customer:");
+            foreach (var customer in updateCustomerList)
+            {
+                if(customer.LockedOut == true)
+                {
+                    Console.WriteLine(customer);
+                }
+            }
+            Console.Write("Unlock Customer: Enter customerId: ");
+            getId = Console.ReadLine();
+            getId = getId.Trim();
+            foreach (var customer in updateCustomerList)
+            {
+                if (customer.IdNumber.ToString() == getId)
+                {
+                    customer.LockedOut = false;
+                    break;
+                }
+            }
+            bank.GetUpdatedCustList(updateCustomerList);
+            Console.Clear();
+            Console.WriteLine("Customer is now unlocked..");
+            System.Threading.Thread.Sleep(1000);
         }
 
         private void addCustomer()
@@ -166,6 +190,21 @@ namespace BankSimulatorV2
                 }
             }
             return verified;
+        }
+        public int WrongPasswordtransfer(int getId)
+        {
+            int userPasswordTries = 0;
+            var updateCustomerList = bank.cloneCustomerList();            
+            foreach (var customer in updateCustomerList)
+            {
+                if(customer.IdNumber == getId)
+                {
+                    userPasswordTries = customer.PasswordTries();
+                    break;
+                }                
+            }
+            bank.GetUpdatedCustList(updateCustomerList);
+            return userPasswordTries;
         }
     }
 }
