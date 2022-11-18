@@ -53,7 +53,7 @@ namespace BankSimulatorV2
             this.wallet = wallet;
             IsAdmin = false;
         }     
-        public int PasswordTries()
+        public int PasswordTries() // this function will be called when user entered wrong password. Password decreases with 1. then getting locked.
         {
             passwordTries--;
             if (passwordTries <= 0)

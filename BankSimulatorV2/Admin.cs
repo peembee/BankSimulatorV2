@@ -242,12 +242,12 @@ namespace BankSimulatorV2
             }
             return verified;
         }
-        public string WrongPasswordtransfer(int getIdOrJustReadPasswordTries)
+        public string WrongPasswordtransfer(int getId, bool readPasswordTries = false)
         {
             int userPasswordTries = 0;
             string returnLogInInfo = "";
             var updateCustomerList = bank.cloneCustomerList();
-            if (id == getIdOrJustReadPasswordTries)
+            if (id == getId)
             {
                 returnLogInInfo = "Welcome Admin: " + Name;
             }
@@ -255,9 +255,9 @@ namespace BankSimulatorV2
             {
                 foreach (var customer in updateCustomerList)
                 {
-                    if (customer.IdNumber == getIdOrJustReadPasswordTries)
+                    if (customer.IdNumber == getId)
                     {
-                        if (getIdOrJustReadPasswordTries == 0) // We only want to see how many tries user has left
+                        if (readPasswordTries == true) // We only want to see how many tries user has left
                         {
                             returnLogInInfo = "You have " + userPasswordTries + " attempts left\n"; 
                         }
