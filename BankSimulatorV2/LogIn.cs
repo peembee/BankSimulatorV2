@@ -127,7 +127,6 @@ namespace BankSimulatorV2
                     {
                         Console.Clear();
                         Console.WriteLine("---------------------------------------------");
-                        Console.WriteLine("You got " + passwordGuesses + " attempts left");
                         Console.WriteLine("Exit Bank application, press 0");
                         Console.WriteLine("---------------------------------------------");
                         Console.Write("\nEnter ID: ");
@@ -150,6 +149,8 @@ namespace BankSimulatorV2
                     }
                     if (admin.VerifyUser(id) == true)
                     {
+                        int getUserSignInTries = admin.WrongPasswordtransfer(id);
+                        Console.WriteLine("You have " + getUserSignInTries + " attempts left\n");
                         break;
                     }
                     else
@@ -170,7 +171,7 @@ namespace BankSimulatorV2
                     }
                     else
                     {
-
+                        admin.WrongPasswordtransfer(id);
                     }
                 }
             }
