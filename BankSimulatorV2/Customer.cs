@@ -13,7 +13,7 @@ namespace BankSimulatorV2
         public string adress;
         public double wallet;
         private bool lockedOut = false;
-        private int passwordTries = 3;
+        private int passwordTries = 4;
        
         public bool LockedOut
         {
@@ -41,8 +41,8 @@ namespace BankSimulatorV2
             { id = value; }
         }
 
-
-
+        List<BankAccount> BankAcc = new List<BankAccount>();
+        List<SavingAccount> SaveAcc = new List<SavingAccount>();
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             this.Name = Name;
@@ -52,12 +52,7 @@ namespace BankSimulatorV2
             this.password = password;
             this.wallet = wallet;
             IsAdmin = false;
-        }
-
-        List<BankAccount> BankAcc = new List<BankAccount>();
-        List<SavingAccount> SaveAcc = new List<SavingAccount>();
-
-
+        }     
         public int PasswordTries()
         {
             passwordTries--;
@@ -65,7 +60,6 @@ namespace BankSimulatorV2
             {
                 passwordTries = 0;
                 lockedOut = true;
-
             }
             return passwordTries;
         }
@@ -119,8 +113,6 @@ namespace BankSimulatorV2
                 Console.ReadLine();
             }
         }
-
-
         public override string ToString()
         {
             return Name + ". " + Age + " Old" + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;

@@ -149,8 +149,8 @@ namespace BankSimulatorV2
                     }
                     if (admin.VerifyUser(id) == true)
                     {
-                        int getUserSignInTries = admin.WrongPasswordtransfer(id);
-                        Console.WriteLine("You have " + getUserSignInTries + " attempts left\n");
+                        string getUserSignInTries = admin.WrongPasswordtransfer(id);
+                        Console.WriteLine(getUserSignInTries);
                         break;
                     }
                     else
