@@ -160,7 +160,7 @@ namespace BankSimulatorV2
 
                 while (true)
                 {                    
-                    Console.WriteLine(admin.WrongPasswordtransfer(id));
+                    Console.WriteLine(admin.WrongPasswordtransfer(id, true)); // getting data about the passwordtries.
                     Console.Write("Enter Password: ");
                     password = Console.ReadLine();
                     if (admin.VerifyUser(password) == true)
@@ -170,7 +170,7 @@ namespace BankSimulatorV2
                     }
                     else
                     {
-                        admin.WrongPasswordtransfer(id);
+                        admin.WrongPasswordtransfer(id); // customers password tries will now decrease with 1.
                     }
                 }
             }
