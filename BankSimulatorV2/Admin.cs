@@ -21,6 +21,8 @@ namespace BankSimulatorV2
             AdminMainMenu();
         }
 
+
+
         public void GetMeny(int userId)
         {
             if (id == userId)
@@ -108,22 +110,19 @@ namespace BankSimulatorV2
 
         public override void PrintInfo()
         {
-            Console.Clear();
             var customerList = bank.cloneCustomerList();
             if (customerList.Count == 0)
             {
-                Console.WriteLine("---------------------------");
                 Console.WriteLine("No Customer added");
-                Console.WriteLine("---------------------------");
             }
             else
             {
                 Console.WriteLine("---------------------------");
                 foreach (var cust in customerList)
                 {
-                    Console.WriteLine(cust);
-                    Console.WriteLine("---------------------------");
-                }                
+                    Console.WriteLine("\n" + cust);
+                }
+                Console.WriteLine("---------------------------");
             }
             Console.WriteLine("\nkey for menu..");
             Console.ReadKey();

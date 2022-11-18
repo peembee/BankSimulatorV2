@@ -50,19 +50,13 @@ namespace BankSimulatorV2
             string accountName = "";
             int accountNumber = 0;
             double balance = 0;
-            Console.Clear();
-            Console.Write("Account name: ");
-            accountName = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Account number: ");
+
             accountNumber = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
             Console.Write("Account balance: ");
             balance = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
-            Console.WriteLine("New account has been added");
-            BankAcc.Add(new BankAccount(accountName, accountNumber, balance));
-            System.Threading.Thread.Sleep(1000);
+
+
         }
         public void AddSavingAccount()
         {
