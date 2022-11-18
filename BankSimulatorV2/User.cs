@@ -8,11 +8,16 @@ namespace BankSimulatorV2
 {
     internal class User
     {
-        public string Name { get; set; }
-        public int Age { get; set; }
+        protected bool isAdmin;
         protected int id;
         protected string password;
-        public bool IsAdmin { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public bool IsAdmin
+        {
+            get { return isAdmin; }
+            set { isAdmin = value;}
+        }
         public virtual void PrintInfo() { }
         public override string ToString()
         {

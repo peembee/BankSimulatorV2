@@ -13,7 +13,7 @@ namespace BankSimulatorV2
         public string adress;
         public double wallet;
         private bool lockedOut = false;
-        private int passwordTries = 4;
+        private int passwordTries = 3;
        
         public bool LockedOut
         {
