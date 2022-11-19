@@ -14,7 +14,7 @@ namespace BankSimulatorV2
         int menuSelect;
 
 
-        List<Customer> customersList = new List<Customer>();
+        private List<Customer> customersList = new List<Customer>();
 
         public void Menu(int userId)
         {
