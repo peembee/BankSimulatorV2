@@ -41,8 +41,8 @@ namespace BankSimulatorV2
             { id = value; }
         }
 
-        List<BankAccount> BankAcc = new List<BankAccount>();
-        List<SavingAccount> SaveAcc = new List<SavingAccount>();
+        private List<BankAccount> bankAccList = new List<BankAccount>();
+        private List<SavingAccount> saveAccList = new List<SavingAccount>();
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             this.Name = Name;
@@ -82,7 +82,7 @@ namespace BankSimulatorV2
             balance = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
             Console.WriteLine("New account has been added");
-            BankAcc.Add(new BankAccount(accountName, accountNumber, balance));
+            bankAccList.Add(new BankAccount(accountName, accountNumber, balance));
             System.Threading.Thread.Sleep(1000);
 
 
@@ -109,12 +109,21 @@ namespace BankSimulatorV2
         }
         public void DisplayAllBankAccount()
         {
-            foreach (var bankAccount in BankAcc)
-            {
-                Console.Clear();
+            Console.Clear();
+            Console.WriteLine("Bank-Accounts");
+            foreach (var bankAccount in bankAccList)
+            {                
                 Console.WriteLine(bankAccount);
-                Console.ReadLine();
             }
+            Console.WriteLine("------------------");
+            Console.WriteLine("\nSaving-Accounts");
+            foreach (var saveAccounts in saveAccList)
+            {
+                Console.WriteLine(saveAccounts);
+            }
+            Console.WriteLine("------------------");
+            Console.WriteLine("Key for menu..");
+            Console.ReadKey();
         }
         public override string ToString()
         {
