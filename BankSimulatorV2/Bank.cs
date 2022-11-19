@@ -34,7 +34,6 @@ namespace BankSimulatorV2
             Console.Clear();
             Console.WriteLine("            Bank Menu");
             Console.WriteLine("         ---------------");
-
             while (true)
             {
                 Console.Clear();
@@ -173,8 +172,7 @@ namespace BankSimulatorV2
                     switch (menuSelect)
                     {
                         case 0:
-                            Console.Clear();
-                            Environment.Exit(0);
+                            Console.Clear();                            
                             break;
                         case 1:
                             addBankAccount();
@@ -201,15 +199,17 @@ namespace BankSimulatorV2
                             Console.WriteLine(AdminInfo);
                             break;
                     }
+                    if(menuSelect == 0)
+                    {
+                        break;
+                    }
                 }
             }
         }
-
         public void addNewCustomer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             customersList.Add(new Customer(Name, adress, Age, idNumber, password, wallet));
         }
-
         private void addBankAccount()
         {
             foreach(var customer in customersList)
@@ -221,43 +221,60 @@ namespace BankSimulatorV2
                 }
             }
         }
-
         private void addSaveAccount()
         {
             foreach (var customer in customersList)
             {
                 if (userSignInId == customer.IdNumber)
                 {
-                    customer.AddNewBankAccount();
+                    customer.AddSavingAccount();
+                }
+            }
+        }
+        private void addLoanAccount()
+        {
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.AddLoan();
                 }
             }
 
         }
-
-        private void addLoanAccount()
-        {
-
-
-        }
-
         private void viewSavingAccounts()
         {
-
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.DisplaySaveAccount();
+                }
+            }
         }
-
         private void viewBankLoan()
         {
-
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.DisplayBankLoan();
+                }
+            }
         }
-
         private void viewAllTypeOfTransactions()
         {
-
-
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.AllTransactionOnCustomer();
+                }
+            }
         }
-
         private void viewAllBankAndSavingAccounts()
         {
+
             foreach (var customer in customersList)
             {
                 if (userSignInId == customer.IdNumber)
