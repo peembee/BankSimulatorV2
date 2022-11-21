@@ -28,7 +28,8 @@ namespace BankSimulatorV2
               "Display Your Bankloan",
               "Display All Your Transaction",
               "Display All Your Bank-Accounts and Save-Accounts",
-              "Display AdminInfo"
+              "Display AdminInfo",
+              "Transfer Money Between Accounts"
             };
 
             Console.Clear();
@@ -60,6 +61,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
 
                 else if (menuSelect == 1)
@@ -73,6 +75,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 2)
                 {
@@ -85,6 +88,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 3)
                 {
@@ -97,6 +101,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 4)
                 {
@@ -109,6 +114,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 5)
                 {
@@ -121,6 +127,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 6)
                 {
@@ -133,6 +140,7 @@ namespace BankSimulatorV2
                     Console.WriteLine("<< " + menuOptions[6] + " >>");
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 7)
                 {
@@ -145,6 +153,7 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine("<< " + menuOptions[7] + " >>");
                     Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 8)
                 {
@@ -157,6 +166,20 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine("<< " + menuOptions[8] + " >>");
+                    Console.WriteLine(menuOptions[9]);
+                }
+                else if (menuSelect == 9)
+                {
+                    Console.WriteLine(menuOptions[0]);
+                    Console.WriteLine(menuOptions[1]);
+                    Console.WriteLine(menuOptions[2]);
+                    Console.WriteLine(menuOptions[3]);
+                    Console.WriteLine(menuOptions[4]);
+                    Console.WriteLine(menuOptions[5]);
+                    Console.WriteLine(menuOptions[6]);
+                    Console.WriteLine(menuOptions[7]);
+                    Console.WriteLine(menuOptions[8]);
+                    Console.WriteLine("<< " + menuOptions[9] + " >>");
                 }
                 var keyPressed = Console.ReadKey();
                 if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != menuOptions.Length - 1)
@@ -197,6 +220,9 @@ namespace BankSimulatorV2
                             break;
                         case 8:
                             Console.WriteLine(AdminInfo);
+                            break;
+                        case 9:
+                            transferMoneyBetweenAccounts();
                             break;
                     }
                     if(menuSelect == 0)
@@ -280,6 +306,17 @@ namespace BankSimulatorV2
                 if (userSignInId == customer.IdNumber)
                 {
                     customer.DisplayAllBankAccount();
+                }
+            }
+        }
+        private void transferMoneyBetweenAccounts()
+        {
+            foreach (var customer in customersList)
+            {
+                if (userSignInId == customer.IdNumber)
+                {
+                    customer.TransferMoneyBetweenBankAccounts();
+                    break;
                 }
             }
         }

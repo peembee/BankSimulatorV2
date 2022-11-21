@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,6 +75,11 @@ namespace BankSimulatorV2
             Console.Clear();
             Console.Write("Account name: ");
             accountName = Console.ReadLine();
+            accountName = accountName.Trim();
+            if (accountName.Length > 0)
+            {
+                accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
+            }
             Console.Clear();
             Console.Write("Account number: ");
             accountNumber = Convert.ToInt32(Console.ReadLine());
@@ -134,17 +140,20 @@ namespace BankSimulatorV2
         {
             Console.Clear();
             Console.WriteLine("Bank-Accounts");
+            Console.WriteLine("------------------");
             foreach (var bankAccount in bankAccList)
             {
                 Console.WriteLine(bankAccount);
+                Console.WriteLine("------------------");
             }
-            Console.WriteLine("------------------");
+            
             Console.WriteLine("\nSaving-Accounts");
+            Console.WriteLine("------------------");
             foreach (var saveAccounts in saveAccList)
             {
                 Console.WriteLine(saveAccounts);
-            }
-            Console.WriteLine("------------------");
+                Console.WriteLine("------------------");
+            }            
             Console.WriteLine("Key for menu..");
             Console.ReadKey();
         }
@@ -155,120 +164,128 @@ namespace BankSimulatorV2
             string toAccount;
             double withdraw = 0;
             string balance = "";
-            while (true)
+            Console.Clear();
+            if (bankAccList.Count <= 1)
             {
-                bool breakLoop = false;
-                Console.Clear();
-                Console.WriteLine("--------------------------");
-                foreach (var bankaccounts in bankAccList)
-                {
-                    Console.WriteLine(bankaccounts.BankAccountName);
-                }
-                Console.WriteLine("--------------------------");
-                Console.Write("Which Bank-Account would you like withdraw from: ");
-                getAccount = Console.ReadLine();
-                getAccount = getAccount.Trim();
-                getAccount = getAccount.ToLower();
-                getAccount = char.ToUpper(getAccount[0]) + getAccount.Substring(1);
-                foreach (var bankaccounts in bankAccList)
-                {
-                    if (getAccount == bankaccounts.BankAccountName)
-                    {
-                        breakLoop = true;
-                        balance = bankaccounts.Balance.ToString();
-                        break;
-                    }
-                }
-                if (breakLoop == true)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Did not find the Account, try again..");
-                    System.Threading.Thread.Sleep(1500);
-                }
+                Console.WriteLine("You need to have atleast two bankaccounts to do transfers");
+                Console.WriteLine("Key for menu..");
+                Console.ReadKey();
             }
-            while (true)
+            else
             {
-                Console.Clear();
-                bool breakLoop = false;
-                Console.WriteLine("--------------------------");
-                foreach (var bankaccounts in bankAccList)
-                {
-                    Console.WriteLine(bankaccounts.BankAccountName);
-                }
-                Console.WriteLine("--------------------------");
-                Console.Write("Which Bank-Account would you like to deposit to: ");
-                toAccount = Console.ReadLine();
-                toAccount = getAccount.Trim();
-                toAccount = getAccount.ToLower();
-                toAccount = char.ToUpper(toAccount[0]) + toAccount.Substring(1);
-                foreach (var bankaccounts in bankAccList)
-                {
-                    if (toAccount == bankaccounts.BankAccountName)
-                    {
-                        breakLoop = true;
-                        break;
-                    }
-                }
-                if (breakLoop == true)
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Did not find the Account, try again..");
-                    System.Threading.Thread.Sleep(1500);
-                }
-            }
-            while (true)
-            {
-                bool breakLoop = false;
                 while (true)
                 {
-                    Console.WriteLine(getAccount + ": Balance: " + balance);
-                    Console.Write("Enter amount to withdraw: ");
-                    try
+                    bool breakLoop = false;
+                    while (true)
                     {
-                        withdraw = Convert.ToDouble(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception)
-                    {
-                        // Do nothing
-                    }
-                }
-                foreach (var bankAccounts in bankAccList)
-                {
-                    if (getAccount == bankAccounts.BankAccountName)
-                    {
-                        if (withdraw <= bankAccounts.Balance)
+                        Console.Clear();
+                        Console.WriteLine("--------------------------");
+                        foreach (var bankaccounts in bankAccList)
                         {
-                            bankAccounts.Withdraw(withdraw);
-                            foreach (var toBankAccounts in bankAccList)
+                            Console.WriteLine(bankaccounts.BankAccountName + ": $" + bankaccounts.Balance);
+                        }
+                        Console.WriteLine("--------------------------");
+                        Console.Write("Which Bank-Account would you like withdraw from: ");
+                        getAccount = Console.ReadLine();
+                        getAccount = getAccount.Trim();
+                        getAccount = getAccount.ToLower();
+
+                        if (getAccount.Length > 0)
+                        {
+                            getAccount = char.ToUpper(getAccount[0]) + getAccount.Substring(1);
+                            break;
+                        }
+                    }
+                    foreach (var bankaccounts in bankAccList)
+                    {
+                        if (getAccount == bankaccounts.BankAccountName)
+                        {
+                            while (true)
                             {
-                                if (toAccount == bankAccounts.BankAccountName)
+                                Console.Clear();
+                                Console.WriteLine("Balance $: " + bankaccounts.Balance.ToString());
+                                Console.Write("Enter amount to withdraw: ");
+                                try
                                 {
-                                    bankAccounts.GetMoney(withdraw);
+                                    withdraw = Convert.ToDouble(Console.ReadLine());
+                                    if (withdraw <= bankaccounts.Balance)
+                                    {
+                                        bankaccounts.Withdraw(withdraw);
+                                        breakLoop = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("You can't withdraw more than you have in " + bankaccounts.BankAccountName + ", Try again");
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    // Do nothing
                                 }
                             }
-                            breakLoop = true;
-                            break;
+                        }
+                    }
+                    if (breakLoop == true)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Did not find any Bankaccount with that name");
+                        System.Threading.Thread.Sleep(1500);
+                    }
+                }
+                while (true)
+                {
+                    bool breakLoop = false;
+                    Console.Clear();
+                    Console.WriteLine("--------------------------");
+                    foreach (var bankaccounts in bankAccList)
+                    {
+                        Console.WriteLine(bankaccounts.BankAccountName);
+                    }
+                    Console.WriteLine("--------------------------");
+                    Console.Write("Which Bank-Account would you like to deposit to: ");
+                    toAccount = Console.ReadLine();
+                    toAccount = toAccount.Trim();
+                    toAccount = toAccount.ToLower();
+
+                    if (toAccount.Length > 0)
+                    {
+                        toAccount = char.ToUpper(toAccount[0]) + toAccount.Substring(1);
+                        if (toAccount == getAccount)
+                        {
+                            Console.WriteLine("You cant transfer to the same account.");
+                            System.Threading.Thread.Sleep(1500);
                         }
                         else
                         {
-                            Console.WriteLine("You can't withdraw more than you have in " + bankAccounts.BankAccountName + ", Try again");
+                            foreach (var bankaccounts in bankAccList)
+                            {
+                                if (toAccount == bankaccounts.BankAccountName)
+                                {
+
+                                    bankaccounts.GetMoney(withdraw);
+                                    breakLoop = true;
+                                    break;
+                                }
+                            }
                         }
                     }
+                    if (breakLoop == true)
+                    {
+                        break;
+                    }
+                    else if (toAccount != getAccount)
+                    {
+                        Console.WriteLine("Did not find the Account, try again..");
+                        System.Threading.Thread.Sleep(1500);
+                    }
                 }
-                if (breakLoop == true)
-                {
-                    break;
-                }
-            }            
-            Console.WriteLine("Transaction succeed..");
-            System.Threading.Thread.Sleep(1500);
+                Console.WriteLine("Transaction succeed..");
+                System.Threading.Thread.Sleep(1500);
+            }
         }
         public override string ToString()
         {
