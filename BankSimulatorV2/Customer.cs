@@ -4,12 +4,13 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BankSimulatorV2
 {
     internal class Customer : User
     {
-        public int bankLoan = 0;
+        public double bankLoan = 0;
         public bool debtToBank = false;
         public string adress;
         public double wallet;
@@ -65,6 +66,7 @@ namespace BankSimulatorV2
 
         private List<BankAccount> bankAccList = new List<BankAccount>();
         private List<SavingAccount> saveAccList = new List<SavingAccount>();
+        BankLoan newLoan = new BankLoan();
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             this.Name = Name;
@@ -143,18 +145,75 @@ namespace BankSimulatorV2
         }
         public void AddLoan()
         {
-
+            if (debtToBank == true)
+            {
+                Console.WriteLine("You already have a mortgage");
+            }
+            else
+            {
+                double loan;
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("The max loan you will get is: $" + totalMoney * 5);
+                    Console.Write("How much do you want to borrow? ");
+                    loan = Convert.ToDouble(Console.ReadLine());
+                    if (loan > totalMoney * 5)
+                    {
+                        Console.WriteLine("The loan is to high for you.");
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.Write("The mortgage that you want will have 30% interest rate and you will have to pay " + newLoan.Loan(loan));
+                        break;
+                    }
+                }
+                Console.WriteLine("Do you want to borrow money? (Y/N)");
+                var KeyPressed = Console.ReadKey();
+                if (KeyPressed.Key == ConsoleKey.Y)
+                {
+                    bankLoan = newLoan.Loan(loan);
+                    debtToBank = true;
+                    Console.WriteLine("The mortgage is accepted");
+                }
+                else
+                {
+                    Console.WriteLine("Welcome back!");
+                }
+            }
+            System.Threading.Thread.Sleep(1000);
         }
         public void DisplaySaveAccount()
         {
-            foreach (var savingAccounts in bankAccList)
+            if (saveAccList.Count == 0)
             {
-                Console.WriteLine(savingAccounts);
+                Console.WriteLine("You dont have any Saving-Account..");
+                System.Threading.Thread.Sleep(1000);
+            }
+            else
+            {
+                foreach (var savingAccounts in bankAccList)
+                {
+                    Console.WriteLine(savingAccounts);
+                    Console.WriteLine("---------------");
+                }
+                Console.WriteLine("Key for menu..");
+                Console.ReadKey();
             }
         }
         public void DisplayBankLoan()
         {
-
+            if(debtToBank == false)
+            {
+                Console.WriteLine("You don't have any loan on this bank..");
+                System.Threading.Thread.Sleep(1000);
+            }
+            else
+            {
+                Console.WriteLine("Total loan: $" + bankLoan);
+                System.Threading.Thread.Sleep(1500);
+            }
         }
         public void AllTransactionOnCustomer()
         {
