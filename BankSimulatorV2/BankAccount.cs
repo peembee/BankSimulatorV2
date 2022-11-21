@@ -13,11 +13,19 @@ namespace BankSimulatorV2
         public int BankAccountNumber { get; set; }
         public double Balance { get; set; }
         private string saveAllTransActions = "";
+        private const double Interest = 1.30;
+        private double Deposit;
         public BankAccount(string BankAccountName, int BankAccountnumber, double Balance)
         {
             this.BankAccountName = BankAccountName;
             this.BankAccountNumber = BankAccountnumber;
             this.Balance = Balance;
+        }
+        public BankAccount(string BankAccountName, int BankAccountnumber, double Deposit, double Interest)
+        {
+            this.BankAccountName = BankAccountName;
+            this.BankAccountNumber = BankAccountnumber;
+            this.Deposit = Deposit;
         }
         private void saveTransaction(double transaction)
         {
