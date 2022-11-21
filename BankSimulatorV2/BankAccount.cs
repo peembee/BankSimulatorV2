@@ -8,16 +8,38 @@ namespace BankSimulatorV2
 {
     internal class BankAccount
     {
+        private double balance;
+        private string bankAccountName;
         private int numberOfTransactions = 0;
-        public string BankAccountName { get; set; }
+        public string BankAccountName
+        {
+            get
+            {
+                return bankAccountName;
+            }
+            set 
+            {
+                bankAccountName = value;
+            }
+        }
         public int BankAccountNumber { get; set; }
-        public double Balance { get; set; }
+        public double Balance
+        {
+            get
+            {
+                return balance;
+            }
+            private set
+            {
+                balance = value;
+            }
+        }
         private string saveAllTransActions = "";
         public BankAccount(string BankAccountName, int BankAccountnumber, double Balance)
         {
-            this.BankAccountName = BankAccountName;
+            this.bankAccountName = BankAccountName;
             this.BankAccountNumber = BankAccountnumber;
-            this.Balance = Balance;
+            this.balance = Balance;
         }
 
         private void saveTransaction(double transaction)
@@ -38,7 +60,7 @@ namespace BankSimulatorV2
 
         public void Withdraw(double withdraw)
         {
-            Balance -= withdraw;
+            balance -= withdraw;
         }
 
         public override string ToString()
