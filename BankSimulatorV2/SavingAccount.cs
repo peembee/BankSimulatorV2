@@ -18,5 +18,10 @@ namespace BankSimulatorV2
             this.BankAccountNumber = BankAccountNumber;
             this.Deposit = deposit;
         }
+
+        public override string ToString()
+        {
+            return "Account: " + BankAccountName + "\nAccount number: " + BankAccountNumber + "\nBalance with a interest rate of 30% " + Deposit;
+        }
     }
 }
