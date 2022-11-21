@@ -35,9 +35,9 @@ namespace BankSimulatorV2
             Balance += incomingMoney;
         }
 
-        public void setMoney(double money)
+        public void Withdraw(double withdraw)
         {
-            Balance += money;
+            Balance -= withdraw;
         }
 
         public override string ToString()
