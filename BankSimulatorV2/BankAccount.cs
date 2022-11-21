@@ -11,7 +11,7 @@ namespace BankSimulatorV2
         private double balance;
         private string bankAccountName;
         private int numberOfTransactions = 0;
-        private string saveAllTransActions = "";
+        private string saveAllTransActions;
         public string BankAccountName
         {
             get
@@ -42,7 +42,6 @@ namespace BankSimulatorV2
             this.BankAccountNumber = BankAccountnumber;
             this.balance = Balance;
         }
-
         private void saveTransaction(double transaction)
         {
             string incomingTransaction = "Transaction: " + numberOfTransactions + ". Account: " + BankAccountName + ". " + ". Account Number: " + BankAccountNumber + ". " + DateTime.Now + ": + " + transaction + "\n";
@@ -50,9 +49,9 @@ namespace BankSimulatorV2
         }
         public string displayAllTransactionsFromBankAccount()
         {
-            if (saveAllTransActions == "")
+            if (saveAllTransActions == string.Empty)
             {
-                saveAllTransActions = "You don't have any transactions..";
+                Console.WriteLine("You don't have any transactions..");
             }
             return saveAllTransActions;
 
@@ -63,15 +62,13 @@ namespace BankSimulatorV2
             saveTransaction(incomingMoney);
             Balance += incomingMoney;
         }
-
         public void Withdraw(double withdraw)
         {
             balance -= withdraw;
         }
-
         public override string ToString()
         {
-            return "Account: " + BankAccountName + "\n Account Number: " + BankAccountNumber + "\nBalance: " + Balance;
+            return "Account: " + BankAccountName + "\nAccount Number: " + BankAccountNumber + "\nBalance: " + Balance;
         }
     }
 }

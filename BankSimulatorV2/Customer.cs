@@ -10,34 +10,29 @@ namespace BankSimulatorV2
 {
     internal class Customer : User
     {
-        public double bankLoan = 0;
-        public bool debtToBank = false;
-        public string adress;
-        public double wallet;
+        private double bankLoan;
+        private double wallet;
+        private bool debtToBank = false;
+        private string adress;
         private bool lockedOut = false;
         private int passwordTries = 3;
-        private double totalMoney;
-        public double TotalMoney
+
+        private List<BankAccount> bankAccList = new List<BankAccount>();
+        private List<SavingAccount> saveAccList = new List<SavingAccount>();
+        BankLoan newLoan = new BankLoan();
+
+        public double BankLoan
+        {
+            get { return bankLoan; }
+            private set { bankLoan = value; }
+        }
+        public double Wallet
         {
             get
-            {
-                return totalMoney;
-            }
+            { return wallet; }
             private set
-            {
-                totalMoney += wallet;
-                foreach(var getMoney in bankAccList)
-                {
-                    totalMoney += getMoney.Balance;
-                }
-                foreach (var getMoney in saveAccList)
-                {
-                    totalMoney += getMoney.Deposit;
-                }
-                totalMoney = value;
-            }
+            { wallet = value; }
         }
-
         public bool LockedOut
         {
             get
@@ -63,10 +58,7 @@ namespace BankSimulatorV2
             set
             { id = value; }
         }
-
-        private List<BankAccount> bankAccList = new List<BankAccount>();
-        private List<SavingAccount> saveAccList = new List<SavingAccount>();
-        BankLoan newLoan = new BankLoan();
+        
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             this.Name = Name;
@@ -74,8 +66,23 @@ namespace BankSimulatorV2
             this.Age = Age;
             this.id = idNumber;
             this.password = password;
-            this.wallet = wallet;
+            Wallet = wallet;
             IsAdmin = false;
+        }
+
+        private double totalMoney()
+        {
+            double totalMoney = 0;
+            foreach (var getMoney in saveAccList)
+            {
+                totalMoney += getMoney.Deposit;
+            }
+            foreach (var getMoney in bankAccList)
+            {
+                totalMoney += getMoney.Balance;
+            }
+            totalMoney += wallet;
+            return totalMoney;
         }
         public int PasswordTries(bool readPasswordTries = false) // this function will be called when user entered wrong password. Password decreases with 1. then getting locked. : Or just read value of passwordTries
         {
@@ -95,20 +102,51 @@ namespace BankSimulatorV2
             string accountName = "";
             int accountNumber = 0;
             double balance = 0;
-            Console.Clear();
-            Console.Write("Account name: ");
-            accountName = Console.ReadLine();
-            accountName = accountName.Trim();
-            if (accountName.Length > 0)
+            while (true)
             {
-                accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
+                Console.Clear();
+                Console.Write("Account name: ");
+                accountName = Console.ReadLine();
+                accountName = accountName.ToLower();
+                accountName = accountName.Trim();
+                if (accountName.Length > 2 && accountName.Length < 11)
+                {
+                    accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Minimum 3 Characters");
+                    Console.WriteLine("Max 10 Characters");
+                    System.Threading.Thread.Sleep(1000);
+                }
             }
-            Console.Clear();
-            Console.Write("Account number: ");
-            accountNumber = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
-            Console.Write("Account balance: ");
-            balance = Convert.ToInt32(Console.ReadLine());
+            
+            accountNumber = getBankAccountNumber();
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Account balance: ");
+                try
+                {
+                    balance = Convert.ToDouble(Console.ReadLine());
+                    if(wallet >= balance)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You wallet only contains $" + wallet);
+                        System.Threading.Thread.Sleep(1500);
+                    }
+                }
+                catch (Exception)
+                {
+
+                    // do nothing
+                }
+                
+            }
             Console.Clear();
             Console.WriteLine("New account has been added");
             bankAccList.Add(new BankAccount(accountName, accountNumber, balance));
@@ -120,14 +158,49 @@ namespace BankSimulatorV2
             int accountNumber;
             double deposit;
             Console.Clear();
-            Console.Write("Account name: ");
-            accountName = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Account number: ");
-            accountNumber = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
-            Console.Write("Amount to deposit: ");
-            deposit = Convert.ToDouble(Console.ReadLine());
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Account name: ");
+                accountName = Console.ReadLine();
+                accountName = accountName.ToLower();
+                accountName = accountName.Trim();
+                if (accountName.Length > 2 && accountName.Length < 11)
+                {
+                    accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Minimum 3 Characters");
+                    Console.WriteLine("Max 10 Characters");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            
+            accountNumber = getBankAccountNumber();
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Amount to deposit: ");
+                try
+                {
+                    deposit = Convert.ToDouble(Console.ReadLine());
+                    if (wallet >= deposit)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You wallet only contains $" + wallet);
+                        System.Threading.Thread.Sleep(1500);
+                    }
+                }
+                catch (Exception)
+                {
+                    // do nothing
+                }
+            }
             Console.Clear();
             Console.Write("The current interest rate will be 30%. Do you wish to continue? (Y/N)");
             var keyPressed = Console.ReadKey();
@@ -137,10 +210,6 @@ namespace BankSimulatorV2
                 Console.WriteLine("New saving account has been added.");
                 saveAccList.Add(new SavingAccount(accountName, accountNumber, deposit));
                 System.Threading.Thread.Sleep(1000);
-            }
-            else
-            {
-                return;
             }
         }
         public void AddLoan()
@@ -156,22 +225,23 @@ namespace BankSimulatorV2
                 while (true)
                 {
                     Console.Clear();
-                    Console.WriteLine("The max loan you will get is: $" + totalMoney * 5);
+                    Console.WriteLine("The max loan you will get is: $" + totalMoney() * 5);
                     Console.Write("How much do you want to borrow? ");
                     loan = Convert.ToDouble(Console.ReadLine());
-                    if (loan > totalMoney * 5)
+                    if (loan > totalMoney() * 5)
                     {
                         Console.WriteLine("The loan is to high for you.");
                         System.Threading.Thread.Sleep(1000);
                     }
                     else
                     {
-                        Console.Write("The mortgage that you want will have 30% interest rate and you will have to pay " + newLoan.Loan(loan));
+                        Console.WriteLine("The mortgage that you want will have 30% interest rate and you will have to pay $" + newLoan.Loan(loan));
                         break;
                     }
                 }
                 Console.WriteLine("Do you want to borrow money? (Y/N)");
                 var KeyPressed = Console.ReadKey();
+                Console.Clear();
                 if (KeyPressed.Key == ConsoleKey.Y)
                 {
                     bankLoan = newLoan.Loan(loan);
@@ -221,7 +291,7 @@ namespace BankSimulatorV2
         public void AllTransactionOnCustomer()
         {
             Console.Clear();
-            foreach(var transaction in bankAccList)
+            foreach (var transaction in bankAccList)
             {
                 transaction.displayAllTransactionsFromBankAccount();
             }
@@ -265,13 +335,11 @@ namespace BankSimulatorV2
             Console.WriteLine("Key for menu..");
             Console.ReadKey();
         }
-
         public void TransferMoneyBetweenBankAccounts()
         {
             string getAccount;
             string toAccount;
             double withdraw = 0;
-            string balance = "";
             Console.Clear();
             if (bankAccList.Count <= 1)
             {
@@ -394,6 +462,16 @@ namespace BankSimulatorV2
                 Console.WriteLine("Transaction succeed..");
                 System.Threading.Thread.Sleep(1500);
             }
+        }
+        private int getBankAccountNumber()
+        {
+            Random rnd = new Random();
+            int bankAccountNumber = 55;
+            for (int i = 0; i < 4; i++)
+            {
+                bankAccountNumber += rnd.Next(1, 10);
+            }
+            return bankAccountNumber;
         }
         public override string ToString()
         {

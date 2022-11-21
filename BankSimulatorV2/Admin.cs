@@ -12,17 +12,15 @@ namespace BankSimulatorV2
 
         public Admin(string name, int age, int idNumber, string password)
         {
-            bank = new Bank();
+            
             this.Name = name;
             this.Age = age;
             id = idNumber;
             IsAdmin = true;
             this.password = password;
+            bank = new Bank(ToString());
             AdminMainMenu();
         }
-
-
-
         public void GetMeny(int userId)
         {
             if (id == userId)
@@ -141,7 +139,6 @@ namespace BankSimulatorV2
                 System.Threading.Thread.Sleep(1000);
             }
         }
-
         private void addCustomer()
         {
             string name = "";
@@ -150,31 +147,126 @@ namespace BankSimulatorV2
             int id = 0;
             string password = "";
             double wallet = 0;
-            Console.Clear();
-            Console.Write("Customer Name: ");
-            name = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Customer Adress: ");
-            adress = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Customer Age: ");
-            age = Convert.ToInt32(Console.ReadLine());
-            Console.Clear();
-            Console.Write("Customer ID: ");
-            id = Convert.ToInt32(Console.ReadLine());
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Customer Name: ");
+                name = Console.ReadLine();
+                name = name.ToLower();
+                name = name.Trim();
+                if (name.Length > 2 && name.Length < 11)
+                {
+                    name = char.ToUpper(name[0]) + name.Substring(1);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Minimum 3 Characters");
+                    Console.WriteLine("Max 10 Characters");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Customer Adress: ");
+                adress = Console.ReadLine();
+                adress = adress.ToLower();
+                adress = adress.Trim();
+                if (adress.Length > 2 && adress.Length < 16)
+                {
+                    adress = char.ToUpper(adress[0]) + adress.Substring(1);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Minimum 3 Characters");
+                    Console.WriteLine("Max 15 Characters");
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Customer Age: ");
+                try
+                {
+                    age = Convert.ToInt32(Console.ReadLine());
+                    if (age > 17 && age < 131)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Acceptable age, 18 - 130");
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                }
+                catch (Exception)
+                {
+
+                    //Do nothing
+                }
+            }
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Customer ID: ");
+                try
+                {
+                    id = Convert.ToInt32(Console.ReadLine());
+                    if (id.ToString().Length == 4 && this.id != id)
+                    {
+                        break;
+                    }
+                    else if(this.id == id)
+                    {
+                        Console.WriteLine("You can't have that ID-number");
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID need to include 4 digit numbers");
+                        System.Threading.Thread.Sleep(1500);
+                    }
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                }
+            }
             Console.Write("Password: ");
             password = Console.ReadLine();
-            Console.Clear();
-            Console.Write("Customer Wallet: ");
-            wallet = Convert.ToDouble(Console.ReadLine());
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Customer Wallet: ");
+                try
+                {
+                    wallet = Convert.ToDouble(Console.ReadLine());
+                    if(wallet > 999)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("$1000 is required");
+                        System.Threading.Thread.Sleep(1500);
+                    }
+                }
+                catch (Exception)
+                {
+                    // do nothing
+                }               
+            }
             bank.addNewCustomer(name, adress, age, id, password, wallet);
             Console.Clear();
             Console.WriteLine("New customer has been added");
             System.Threading.Thread.Sleep(1000);
         }
-
         public override void PrintInfo()
         {
+            Console.Clear();
             var customerList = bank.cloneCustomerList();
             if (customerList.Count == 0)
             {
@@ -196,13 +288,13 @@ namespace BankSimulatorV2
         {
             bool verified = false;
             bool noUserId = true;
-            string messageLockedOut = "You have been locked from the system, Contact Admin:\n" + ToString();            
+            string messageLockedOut = "You have been locked from the system, Contact Admin:\n" + ToString();
             var clonedList = bank.cloneCustomerList();
             if (id == getId) // AdminMenu will be called
             {
                 verified = true;
             }
-            else 
+            else
             {
                 foreach (var customer in clonedList)
                 {
@@ -222,7 +314,7 @@ namespace BankSimulatorV2
                         }
                     }
                 }
-                if(noUserId == true)
+                if (noUserId == true)
                 {
                     Console.WriteLine("Id: " + getId + " does not exist");
                 }
@@ -242,8 +334,8 @@ namespace BankSimulatorV2
                 foreach (var customer in clonedList)
                 {
                     if (customer.Password == getPassword)
-                    {                       
-                            verified = true;                        
+                    {
+                        verified = true;
                     }
                 }
             }
@@ -279,7 +371,7 @@ namespace BankSimulatorV2
                             returnLogInInfo = "You been locked. Please Contact Admin:\n" + ToString();
                         }
                         break;
-                    }                    
+                    }
                 }
             }
             bank.GetUpdatedCustList(updateCustomerList);

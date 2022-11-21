@@ -10,12 +10,15 @@ namespace BankSimulatorV2
     internal class Bank
     {
         private int userSignInId;
-        string AdminInfo = "";
+        private string adminInfo;
         int menuSelect;
-
 
         private List<Customer> customersList = new List<Customer>();
 
+        public Bank(string adminInfo)
+        {
+            this.adminInfo = adminInfo;
+        }
         public void Menu(int userId)
         {
             userSignInId = userId;
@@ -40,19 +43,24 @@ namespace BankSimulatorV2
                 Console.Clear();
                 Console.CursorVisible = false;
                 Console.WriteLine("--------------");
-                Console.WriteLine("Signed in");
+                Console.Write("Signed in: ");
                 foreach (var cust in customersList)
                 {
                     if (cust.IdNumber == userId)
                     {
-                        Console.WriteLine(cust.Name);
-                        Console.WriteLine("ID: " + cust.IdNumber);
+                        Console.Write(cust.Name);
+                        Console.WriteLine("\nID: " + cust.IdNumber);
+                        Console.WriteLine("Wallet: $" + cust.Wallet);
+                        Console.WriteLine("debt: " + cust.BankLoan);
+                        break;
                     }
                 }
                 Console.WriteLine("--------------");
                 if (menuSelect == 0)
                 {
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[0] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[1]);
                     Console.WriteLine(menuOptions[2]);
                     Console.WriteLine(menuOptions[3]);
@@ -67,7 +75,9 @@ namespace BankSimulatorV2
                 else if (menuSelect == 1)
                 {
                     Console.WriteLine(menuOptions[0]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[1] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[2]);
                     Console.WriteLine(menuOptions[3]);
                     Console.WriteLine(menuOptions[4]);
@@ -81,7 +91,9 @@ namespace BankSimulatorV2
                 {
                     Console.WriteLine(menuOptions[0]);
                     Console.WriteLine(menuOptions[1]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[2] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[3]);
                     Console.WriteLine(menuOptions[4]);
                     Console.WriteLine(menuOptions[5]);
@@ -95,7 +107,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[0]);
                     Console.WriteLine(menuOptions[1]);
                     Console.WriteLine(menuOptions[2]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[3] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[4]);
                     Console.WriteLine(menuOptions[5]);
                     Console.WriteLine(menuOptions[6]);
@@ -109,7 +123,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[1]);
                     Console.WriteLine(menuOptions[2]);
                     Console.WriteLine(menuOptions[3]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[4] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[5]);
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
@@ -123,7 +139,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[2]);
                     Console.WriteLine(menuOptions[3]);
                     Console.WriteLine(menuOptions[4]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[5] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
@@ -137,7 +155,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[3]);
                     Console.WriteLine(menuOptions[4]);
                     Console.WriteLine(menuOptions[5]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[6] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
                     Console.WriteLine(menuOptions[9]);
@@ -151,7 +171,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[4]);
                     Console.WriteLine(menuOptions[5]);
                     Console.WriteLine(menuOptions[6]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[7] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[8]);
                     Console.WriteLine(menuOptions[9]);
                 }
@@ -165,7 +187,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[5]);
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[8] + " >>");
+                    Console.ResetColor();
                     Console.WriteLine(menuOptions[9]);
                 }
                 else if (menuSelect == 9)
@@ -179,7 +203,9 @@ namespace BankSimulatorV2
                     Console.WriteLine(menuOptions[6]);
                     Console.WriteLine(menuOptions[7]);
                     Console.WriteLine(menuOptions[8]);
+                    Console.BackgroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("<< " + menuOptions[9] + " >>");
+                    Console.ResetColor();
                 }
                 var keyPressed = Console.ReadKey();
                 if (keyPressed.Key == ConsoleKey.DownArrow && menuSelect != menuOptions.Length - 1)
@@ -219,7 +245,10 @@ namespace BankSimulatorV2
                             viewAllBankAndSavingAccounts();
                             break;
                         case 8:
-                            Console.WriteLine(AdminInfo);
+                            Console.Clear();
+                            Console.WriteLine(adminInfo);
+                            Console.WriteLine("\nKey for menu..");
+                            Console.ReadKey();
                             break;
                         case 9:
                             transferMoneyBetweenAccounts();
@@ -319,10 +348,6 @@ namespace BankSimulatorV2
                     break;
                 }
             }
-        }
-        private void viewAdminInfo(string getAdminInfo)
-        {
-            AdminInfo = getAdminInfo;
         }
         public List<Customer> cloneCustomerList()
         {
