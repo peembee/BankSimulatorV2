@@ -15,6 +15,24 @@ namespace BankSimulatorV2
         public double wallet;
         private bool lockedOut = false;
         private int passwordTries = 3;
+        private double totalMoney;
+        public double TotalMoney
+        {
+            get
+            {
+                return totalMoney;
+            }
+            set
+            {
+                totalMoney += wallet;
+                foreach(var getMoney in bankAccList)
+                {
+                    totalMoney += getMoney.Balance;
+                }
+                
+                totalMoney = value;
+            }
+        }
 
         public bool LockedOut
         {
@@ -126,7 +144,10 @@ namespace BankSimulatorV2
         }
         public void DisplaySaveAccount()
         {
-
+            foreach (var savingAccounts in bankAccList)
+            {
+                Console.WriteLine(savingAccounts);
+            }
         }
         public void DisplayBankLoan()
         {
@@ -146,14 +167,14 @@ namespace BankSimulatorV2
                 Console.WriteLine(bankAccount);
                 Console.WriteLine("------------------");
             }
-            
+
             Console.WriteLine("\nSaving-Accounts");
             Console.WriteLine("------------------");
             foreach (var saveAccounts in saveAccList)
             {
                 Console.WriteLine(saveAccounts);
                 Console.WriteLine("------------------");
-            }            
+            }
             Console.WriteLine("Key for menu..");
             Console.ReadKey();
         }
