@@ -11,6 +11,7 @@ namespace BankSimulatorV2
         private int passwordGuesses = 3;
         private int id;
         private string password;
+
         Admin admin;
         public LogIn()
         {
@@ -40,9 +41,10 @@ namespace BankSimulatorV2
                 Console.Write("Enter Name: ");
                 getAdminName = Console.ReadLine();
                 getAdminName = getAdminName.Trim();
-                getAdminName = char.ToUpper(getAdminName[0]) + getAdminName.Substring(1);
+                getAdminName = getAdminName.ToLower();
                 if (getAdminName.Length > 2 && getAdminName.Length < 10)
                 {
+                    getAdminName = char.ToUpper(getAdminName[0]) + getAdminName.Substring(1);
                     break;
                 }
                 else
@@ -115,7 +117,6 @@ namespace BankSimulatorV2
             }
             admin = new Admin(getAdminName, getAdminAge, getAdminId, getAdminPassword);
         }
-
         public void SignInMenu()
         {
             Console.Clear();
