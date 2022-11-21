@@ -43,10 +43,10 @@ namespace BankSimulatorV2
             accountName = Console.ReadLine();
             Console.Clear();
             Console.Write("Account number: ");
-            accountNumber = Convert.ToInt32(Console.ReadLine);
+            accountNumber = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
             Console.Write("Account balance: ");
-            balance = Convert.ToInt32(Console.ReadLine);
+            balance = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
             Console.WriteLine("New account has been added");
             BankAcc.Add(new BankAccount(accountName, accountNumber, balance));
@@ -54,7 +54,33 @@ namespace BankSimulatorV2
         }
         public void AddSavingAccount()
         {
-
+            string accountName = "";
+            int accountNumber;
+            double deposit;
+            double interest = 1.30;
+            Console.Clear();
+            Console.Write("Account name: ");
+            accountName = Console.ReadLine();
+            Console.Clear();
+            Console.Write("Account number: ");
+            accountNumber = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            Console.Write("Amount to deposit: ");
+            deposit = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            Console.Write("The current interest rate will be 30%. Do you wish to continue? (Y/N)");
+            var keyPressed = Console.ReadKey();
+            if (keyPressed.Key == ConsoleKey.Y)
+            {
+                Console.Clear();
+                Console.WriteLine("New saving account has been added.");
+                SaveAcc.Add(new SavingAccount(accountName, accountNumber, deposit));
+                Console.WriteLine("");
+            }
+            else
+            {
+                return;
+            }
         }
         public void AddLoan()
         {
