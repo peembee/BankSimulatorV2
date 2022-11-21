@@ -11,13 +11,14 @@ namespace BankSimulatorV2
         private double balance;
         private string bankAccountName;
         private int numberOfTransactions = 0;
+        private string saveAllTransActions = "";
         public string BankAccountName
         {
             get
             {
                 return bankAccountName;
             }
-            set 
+            set
             {
                 bankAccountName = value;
             }
@@ -34,7 +35,7 @@ namespace BankSimulatorV2
                 balance = value;
             }
         }
-        private string saveAllTransActions = "";
+
         public BankAccount(string BankAccountName, int BankAccountnumber, double Balance)
         {
             this.bankAccountName = BankAccountName;
@@ -49,7 +50,12 @@ namespace BankSimulatorV2
         }
         public string displayAllTransactionsFromBankAccount()
         {
+            if (saveAllTransActions == "")
+            {
+                saveAllTransActions = "You don't have any transactions..";
+            }
             return saveAllTransActions;
+
         }
         public void GetMoney(double incomingMoney)
         {

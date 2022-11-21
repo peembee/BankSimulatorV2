@@ -145,6 +145,7 @@ namespace BankSimulatorV2
         }
         public void AddLoan()
         {
+            Console.Clear();
             if (debtToBank == true)
             {
                 Console.WriteLine("You already have a mortgage");
@@ -186,6 +187,7 @@ namespace BankSimulatorV2
         }
         public void DisplaySaveAccount()
         {
+            Console.Clear();
             if (saveAccList.Count == 0)
             {
                 Console.WriteLine("You dont have any Saving-Account..");
@@ -204,7 +206,8 @@ namespace BankSimulatorV2
         }
         public void DisplayBankLoan()
         {
-            if(debtToBank == false)
+            Console.Clear();
+            if (debtToBank == false)
             {
                 Console.WriteLine("You don't have any loan on this bank..");
                 System.Threading.Thread.Sleep(1000);
@@ -217,25 +220,47 @@ namespace BankSimulatorV2
         }
         public void AllTransactionOnCustomer()
         {
-
+            Console.Clear();
+            foreach(var transaction in bankAccList)
+            {
+                transaction.displayAllTransactionsFromBankAccount();
+            }
+            Console.WriteLine("Key for menu..");
+            Console.ReadKey();
         }
         public void DisplayAllBankAccount()
         {
             Console.Clear();
             Console.WriteLine("Bank-Accounts");
             Console.WriteLine("------------------");
-            foreach (var bankAccount in bankAccList)
+            if (bankAccList.Count == 0)
             {
-                Console.WriteLine(bankAccount);
-                Console.WriteLine("------------------");
+                Console.WriteLine("You dont have any Bank-Accounts");
+                Console.WriteLine("------------------\n");
+            }
+            else
+            {
+                foreach (var bankAccount in bankAccList)
+                {
+                    Console.WriteLine(bankAccount);
+                    Console.WriteLine("------------------");
+                }
             }
 
             Console.WriteLine("\nSaving-Accounts");
             Console.WriteLine("------------------");
-            foreach (var saveAccounts in saveAccList)
+            if (saveAccList.Count == 0)
             {
-                Console.WriteLine(saveAccounts);
-                Console.WriteLine("------------------");
+                Console.WriteLine("You dont have any Saving-Accounts");
+                Console.WriteLine("------------------\n");
+            }
+            else
+            {
+                foreach (var saveAccounts in saveAccList)
+                {
+                    Console.WriteLine(saveAccounts);
+                    Console.WriteLine("------------------");
+                }
             }
             Console.WriteLine("Key for menu..");
             Console.ReadKey();

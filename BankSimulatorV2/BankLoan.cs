@@ -11,9 +11,6 @@ namespace BankSimulatorV2
         public double Loan(double totalLoan)
         {
             totalLoan = totalLoan * 1.3;
-
-
-
             return totalLoan;
         }
     }
