@@ -16,7 +16,7 @@ namespace BankSimulatorV2
         {
             this.BankAccountName = BankAccountName;
             this.BankAccountNumber = BankAccountNumber;
-            this.Deposit = deposit;
+            this.Deposit = deposit * interest;
         }
 
         public override string ToString()

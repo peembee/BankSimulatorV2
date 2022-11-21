@@ -22,14 +22,17 @@ namespace BankSimulatorV2
             {
                 return totalMoney;
             }
-            set
+            private set
             {
                 totalMoney += wallet;
                 foreach(var getMoney in bankAccList)
                 {
                     totalMoney += getMoney.Balance;
                 }
-                
+                foreach (var getMoney in saveAccList)
+                {
+                    totalMoney += getMoney.Deposit;
+                }
                 totalMoney = value;
             }
         }
