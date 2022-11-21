@@ -21,6 +21,17 @@ namespace BankSimulatorV2
         private List<SavingAccount> saveAccList = new List<SavingAccount>();
         BankLoan newLoan = new BankLoan();
 
+        public int ChangeasswordTries
+        {
+            get
+            {
+                return passwordTries;
+            }
+            set
+            {
+                passwordTries = value;
+            }
+        }       
         public double BankLoan
         {
             get { return bankLoan; }
@@ -132,6 +143,7 @@ namespace BankSimulatorV2
                     balance = Convert.ToDouble(Console.ReadLine());
                     if(wallet >= balance)
                     {
+                        wallet -= balance;   
                         break;
                     }
                     else
@@ -188,6 +200,7 @@ namespace BankSimulatorV2
                     deposit = Convert.ToDouble(Console.ReadLine());
                     if (wallet >= deposit)
                     {
+                        wallet -= deposit;
                         break;
                     }
                     else
@@ -265,7 +278,7 @@ namespace BankSimulatorV2
             }
             else
             {
-                foreach (var savingAccounts in bankAccList)
+                foreach (var savingAccounts in saveAccList)
                 {
                     Console.WriteLine(savingAccounts);
                     Console.WriteLine("---------------");
@@ -466,8 +479,8 @@ namespace BankSimulatorV2
         private int getBankAccountNumber()
         {
             Random rnd = new Random();
-            int bankAccountNumber = 55;
-            for (int i = 0; i < 4; i++)
+            int bankAccountNumber = 0;
+            for (int i = 0; i < 5; i++)
             {
                 bankAccountNumber += rnd.Next(1, 10);
             }
