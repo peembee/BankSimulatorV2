@@ -106,8 +106,8 @@ namespace BankSimulatorV2
             {
                 Console.Clear();
                 Console.WriteLine("New saving account has been added.");
-                SaveAcc.Add(new SavingAccount(accountName, accountNumber, deposit));
-                Console.WriteLine("");
+                saveAccList.Add(new SavingAccount(accountName, accountNumber, deposit));
+                System.Threading.Thread.Sleep(1000);
             }
             else
             {
