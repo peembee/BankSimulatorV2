@@ -115,6 +115,7 @@ namespace BankSimulatorV2
                             if (customer.LockedOut == true)
                             {
                                 customer.LockedOut = false;
+                                customer.ChangeasswordTries = 3;
                                 breakLoop = true;
                                 break;
                             }
