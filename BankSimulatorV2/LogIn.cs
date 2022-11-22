@@ -15,6 +15,7 @@ namespace BankSimulatorV2
         Admin admin;
         public LogIn()
         {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(@"
  ________  __                        _______                       __       
 /        |/  |                      /       \                     /  |      
