@@ -504,7 +504,7 @@ namespace BankSimulatorV2
         }
         public override string ToString()
         {
-            return Name + ". " + Age + " Years Old" + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;
+            return Name + "\nAge: " + Age + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;
         }
     }
 }
