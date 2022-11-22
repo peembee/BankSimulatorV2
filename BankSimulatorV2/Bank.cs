@@ -43,15 +43,19 @@ namespace BankSimulatorV2
                 Console.Clear();
                 Console.CursorVisible = false;
                 Console.WriteLine("--------------");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("Signed in: ");
+                Console.ResetColor();
                 foreach (var cust in customersList)
                 {
                     if (cust.IdNumber == userId)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(cust.Name);
                         Console.WriteLine("\nID: " + cust.IdNumber);
                         Console.WriteLine("Wallet: $" + cust.Wallet);
                         Console.WriteLine("debt: " + cust.BankLoan);
+                        Console.ResetColor();
                         break;
                     }
                 }
@@ -329,12 +333,11 @@ namespace BankSimulatorV2
         }
         private void viewAllBankAndSavingAccounts()
         {
-
             foreach (var customer in customersList)
             {
                 if (userSignInId == customer.IdNumber)
                 {
-                    customer.DisplayAllBankAccount();
+                    customer.DisplayAllBankAndSavingAccount();
                 }
             }
         }

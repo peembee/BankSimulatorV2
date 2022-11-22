@@ -20,7 +20,7 @@ namespace BankSimulatorV2
         }
         public override string ToString()
         {
-            return "Account: " + BankAccountName + "\nAccount number: " + BankAccountNumber + "\nBalance with a interest rate of 30% " + Deposit;
+            return "Account: " + BankAccountName + "\nAccount number: " + BankAccountNumber + "\nBalance with a interest rate of 30%. Total $" + Deposit + ".";
         }
     }
 }

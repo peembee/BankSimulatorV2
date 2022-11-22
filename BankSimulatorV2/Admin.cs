@@ -11,8 +11,7 @@ namespace BankSimulatorV2
         Bank bank;
 
         public Admin(string name, int age, int idNumber, string password)
-        {
-            
+        {            
             this.Name = name;
             this.Age = age;
             id = idNumber;
@@ -39,6 +38,7 @@ namespace BankSimulatorV2
             while (userChoice != "0")
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Menu for Admin");
                 Console.WriteLine("----------------------");
                 Console.WriteLine("#1: Unlock Customer");
@@ -46,6 +46,7 @@ namespace BankSimulatorV2
                 Console.WriteLine("#3: Display all customers");
                 Console.WriteLine("#0: Sign Out");
                 Console.WriteLine("----------------------");
+                Console.ResetColor();
                 Console.Write("Enter option: ");
                 userChoice = Console.ReadLine();
                 userChoice = userChoice.Trim();
@@ -78,7 +79,6 @@ namespace BankSimulatorV2
             while (true)
             {
                 bool breakLoop = false;
-
                 Console.Clear();
                 Console.WriteLine("Locked Customer:");
                 foreach (var customer in updateCustomerList)
@@ -148,6 +148,7 @@ namespace BankSimulatorV2
             int id = 0;
             string password = "";
             double wallet = 0;
+
             while (true)
             {
                 Console.Clear();
@@ -167,6 +168,7 @@ namespace BankSimulatorV2
                     System.Threading.Thread.Sleep(1000);
                 }
             }
+
             while (true)
             {
                 Console.Clear();
@@ -186,6 +188,7 @@ namespace BankSimulatorV2
                     System.Threading.Thread.Sleep(1000);
                 }
             }
+
             while (true)
             {
                 Console.Clear();
@@ -209,6 +212,7 @@ namespace BankSimulatorV2
                     //Do nothing
                 }
             }
+
             while (true)
             {
                 Console.Clear();
@@ -236,8 +240,10 @@ namespace BankSimulatorV2
                     //do nothing
                 }
             }
+
             Console.Write("Password: ");
             password = Console.ReadLine();
+
             while (true)
             {
                 Console.Clear();
@@ -275,12 +281,16 @@ namespace BankSimulatorV2
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("---------------------------");
+                Console.ResetColor();
                 foreach (var cust in customerList)
                 {
-                    Console.WriteLine("\n" + cust);
+                    Console.WriteLine(cust);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("---------------------------");
+                    Console.ResetColor();
                 }
-                Console.WriteLine("---------------------------");
             }
             Console.WriteLine("\nkey for menu..");
             Console.ReadKey();
@@ -342,7 +352,7 @@ namespace BankSimulatorV2
             }
             return verified;
         }
-        public string WrongPasswordtransfer(int getId, bool readPasswordTries = false)
+        public string ReadPasswordTriesOrDecreasePasswordtries(int getId, bool readPasswordTries = false)
         {
             Console.Clear();
             int userPasswordTries = 0;
