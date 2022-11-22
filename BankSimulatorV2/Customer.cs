@@ -21,7 +21,7 @@ namespace BankSimulatorV2
         private List<SavingAccount> saveAccList = new List<SavingAccount>();
         BankLoan newLoan = new BankLoan();
 
-        public int ChangeasswordTries
+        public int ChangePasswordTries
         {
             get
             {
