@@ -77,7 +77,7 @@ namespace BankSimulatorV2
             this.Age = Age;
             this.id = idNumber;
             this.password = password;
-            Wallet = wallet;
+            this.wallet = wallet;
             IsAdmin = false;
         }
 
@@ -156,9 +156,9 @@ namespace BankSimulatorV2
                 {
 
                     // do nothing
-                }
-                
+                }                
             }
+
             Console.Clear();
             Console.WriteLine("New account has been added");
             bankAccList.Add(new BankAccount(accountName, accountNumber, balance));
@@ -188,9 +188,9 @@ namespace BankSimulatorV2
                     Console.WriteLine("Max 10 Characters");
                     System.Threading.Thread.Sleep(1000);
                 }
-            }
-            
+            }            
             accountNumber = getBankAccountNumber();
+
             while (true)
             {
                 Console.Clear();
@@ -214,6 +214,7 @@ namespace BankSimulatorV2
                     // do nothing
                 }
             }
+
             Console.Clear();
             Console.Write("The current interest rate will be 30%. Do you wish to continue? (Y/N)");
             var keyPressed = Console.ReadKey();
@@ -304,17 +305,29 @@ namespace BankSimulatorV2
         public void AllTransactionOnCustomer()
         {
             Console.Clear();
-            foreach (var transaction in bankAccList)
+            if (bankAccList.Count == 0)
             {
-                transaction.displayAllTransactionsFromBankAccount();
+                Console.WriteLine("You don't have any transactions..");
             }
-            Console.WriteLine("Key for menu..");
+            else
+            {
+                foreach (var transaction in bankAccList)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Bank-Account: " + transaction.BankAccountName + ":");
+                    Console.ResetColor();
+                    Console.WriteLine(transaction.displayAllTransactionsFromBankAccount());
+                }
+            }
+            Console.WriteLine("\nKey for menu..");
             Console.ReadKey();
         }
-        public void DisplayAllBankAccount()
+        public void DisplayAllBankAndSavingAccount()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Bank-Accounts");
+            Console.ResetColor();
             Console.WriteLine("------------------");
             if (bankAccList.Count == 0)
             {
@@ -330,7 +343,9 @@ namespace BankSimulatorV2
                 }
             }
 
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\nSaving-Accounts");
+            Console.ResetColor();
             Console.WriteLine("------------------");
             if (saveAccList.Count == 0)
             {
@@ -425,6 +440,7 @@ namespace BankSimulatorV2
                         System.Threading.Thread.Sleep(1500);
                     }
                 }
+
                 while (true)
                 {
                     bool breakLoop = false;
@@ -488,7 +504,7 @@ namespace BankSimulatorV2
         }
         public override string ToString()
         {
-            return Name + ". " + Age + " Old" + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;
+            return Name + ". " + Age + " Years Old" + "\nAdress: " + adress + "\nID: " + id + "\nPassword: " + password;
         }
     }
 }

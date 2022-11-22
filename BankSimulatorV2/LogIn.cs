@@ -19,7 +19,8 @@ namespace BankSimulatorV2
             int getAdminAge;
             int getAdminId;
             string getAdminPassword;
-            Console.WriteLine("First Startup");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("    First Startup");
             Console.Write("   L");
             System.Threading.Thread.Sleep(200);
             Console.Write("O");
@@ -36,6 +37,7 @@ namespace BankSimulatorV2
             System.Threading.Thread.Sleep(200);
             Console.Clear();
             Console.WriteLine("Create Admin\n");
+            Console.ResetColor();
             while (true)
             {
                 Console.Write("Enter Name: ");
@@ -155,7 +157,7 @@ namespace BankSimulatorV2
                 }
                 while (admin.VerifyUser(id) == true)
                 {                    
-                    Console.WriteLine(admin.WrongPasswordtransfer(id, true)); // Only read passwordTries.
+                    Console.WriteLine(admin.ReadPasswordTriesOrDecreasePasswordtries(id, true)); // Only read passwordTries.
                     Console.Write("Enter Password: ");
                     password = Console.ReadLine();
                     if (admin.VerifyUser(password) == true)
@@ -165,7 +167,7 @@ namespace BankSimulatorV2
                     }
                     else
                     {
-                        admin.WrongPasswordtransfer(id);
+                        admin.ReadPasswordTriesOrDecreasePasswordtries(id);
                     }
                 }
             }

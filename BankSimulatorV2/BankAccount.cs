@@ -10,8 +10,8 @@ namespace BankSimulatorV2
     {
         private double balance;
         private string bankAccountName;
-        private int numberOfTransactions = 0;
-        private string saveAllTransActions;
+        private static int numberOfTransactions;
+        private string saveAllTransActions = "";
         public string BankAccountName
         {
             get
@@ -36,35 +36,40 @@ namespace BankSimulatorV2
             }
         }
 
-        public BankAccount(string BankAccountName, int BankAccountnumber, double Balance)
-        {
-            this.bankAccountName = BankAccountName;
-            this.BankAccountNumber = BankAccountnumber;
-            this.balance = Balance;
+        public BankAccount(string bankAccountName, int bankAccountnumber, double balance)
+        {            
+            this.bankAccountName = bankAccountName;
+            this.BankAccountNumber = bankAccountnumber;
+            this.balance = balance;            
+            saveTransaction(balance);
         }
-        private void saveTransaction(double transaction)
+        private void saveTransaction(double transaction, string withdraw = "no")
         {
-            string incomingTransaction = "Transaction: " + numberOfTransactions + ". Account: " + BankAccountName + ". " + ". Account Number: " + BankAccountNumber + ". " + DateTime.Now + ": + " + transaction + "\n";
-            saveAllTransActions += incomingTransaction;
+            numberOfTransactions++;
+            if (withdraw == "no")
+            {
+                string incomingTransaction = "Transaction: " + numberOfTransactions + ". Account: " + BankAccountName + ". " + ". Account Number: " + BankAccountNumber + ". " + DateTime.Now + ": + " + transaction + "\n";
+                saveAllTransActions = saveAllTransActions + incomingTransaction;
+            }
+            else
+            {
+                string incomingTransaction = "Transaction: " + numberOfTransactions + ". Account: " + BankAccountName + ". " + ". Account Number: " + BankAccountNumber + ". " + DateTime.Now + ": - " + transaction + "\n";
+                saveAllTransActions = saveAllTransActions + incomingTransaction;
+            }
         }
         public string displayAllTransactionsFromBankAccount()
         {
-            if (saveAllTransActions == string.Empty)
-            {
-                Console.WriteLine("You don't have any transactions..");
-            }
-            return saveAllTransActions;
-
+                return saveAllTransActions;
         }
         public void GetMoney(double incomingMoney)
         {
-            numberOfTransactions++;
             saveTransaction(incomingMoney);
             Balance += incomingMoney;
         }
         public void Withdraw(double withdraw)
         {
             balance -= withdraw;
+            saveTransaction(withdraw, "yes");
         }
         public override string ToString()
         {
