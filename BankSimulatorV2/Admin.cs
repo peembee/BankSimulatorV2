@@ -240,7 +240,7 @@ namespace BankSimulatorV2
                     //do nothing
                 }
             }
-
+            Console.Clear();
             Console.Write("Password: ");
             password = Console.ReadLine();
 
