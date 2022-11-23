@@ -21,7 +21,7 @@ namespace BankSimulatorV2
         public virtual void PrintInfo() { }
         public override string ToString()
         {
-            return "ID: " + id + ". " + Name + ". " + Age + " Old";
+            return "ID: " + id + "\nName: " + Name + "\nAge: " + Age ;
         }
     }
 }
