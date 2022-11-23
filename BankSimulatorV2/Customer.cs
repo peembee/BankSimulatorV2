@@ -31,7 +31,7 @@ namespace BankSimulatorV2
             {
                 passwordTries = value;
             }
-        }       
+        }
         public double BankLoan
         {
             get { return bankLoan; }
@@ -69,7 +69,7 @@ namespace BankSimulatorV2
             set
             { id = value; }
         }
-        
+
         public Customer(string Name, string adress, int Age, int idNumber, string password, double wallet)
         {
             this.Name = Name;
@@ -115,6 +115,7 @@ namespace BankSimulatorV2
             double balance = 0;
             while (true)
             {
+                bool breakeLoop = true;
                 Console.Clear();
                 Console.Write("Account name: ");
                 accountName = Console.ReadLine();
@@ -123,7 +124,25 @@ namespace BankSimulatorV2
                 if (accountName.Length > 2 && accountName.Length < 11)
                 {
                     accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
-                    break;
+                    if (bankAccList.Count >= 1)
+                    {
+                        foreach (var bankAcc in bankAccList)
+                        {
+                            if (accountName == bankAcc.BankAccountName)
+                            {
+                                breakeLoop = false;
+                            }
+                        }
+                    }
+                    if (breakeLoop == true)
+                    {                        
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You can't have the same name as another bankaccount");
+                        System.Threading.Thread.Sleep(1500);
+                    }
                 }
                 else
                 {
@@ -132,18 +151,24 @@ namespace BankSimulatorV2
                     System.Threading.Thread.Sleep(1000);
                 }
             }
-            
+
             accountNumber = getBankAccountNumber();
+
             while (true)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("--------");
+                Console.WriteLine("Wallet: " + wallet);
+                Console.WriteLine("--------");
+                Console.ResetColor();
                 Console.Write("Account balance: ");
                 try
                 {
                     balance = Convert.ToDouble(Console.ReadLine());
-                    if(wallet >= balance)
+                    if (wallet >= balance)
                     {
-                        wallet -= balance;   
+                        wallet -= balance;
                         break;
                     }
                     else
@@ -156,7 +181,7 @@ namespace BankSimulatorV2
                 {
 
                     // do nothing
-                }                
+                }
             }
 
             Console.Clear();
@@ -172,6 +197,7 @@ namespace BankSimulatorV2
             Console.Clear();
             while (true)
             {
+                bool breakeLoop = true;
                 Console.Clear();
                 Console.Write("Account name: ");
                 accountName = Console.ReadLine();
@@ -180,7 +206,25 @@ namespace BankSimulatorV2
                 if (accountName.Length > 2 && accountName.Length < 11)
                 {
                     accountName = char.ToUpper(accountName[0]) + accountName.Substring(1);
-                    break;
+                    if (saveAccList.Count >= 1)
+                    {
+                        foreach (var bankAcc in saveAccList)
+                        {
+                            if (accountName == bankAcc.BankAccountName)
+                            {
+                                breakeLoop = false;
+                            }
+                        }
+                    }
+                    if (breakeLoop == true)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You can't have the same name as another bankaccount");
+                        System.Threading.Thread.Sleep(1500);
+                    }
                 }
                 else
                 {
@@ -188,7 +232,7 @@ namespace BankSimulatorV2
                     Console.WriteLine("Max 10 Characters");
                     System.Threading.Thread.Sleep(1000);
                 }
-            }            
+            }
             accountNumber = getBankAccountNumber();
 
             while (true)
@@ -495,10 +539,40 @@ namespace BankSimulatorV2
         private int getBankAccountNumber()
         {
             Random rnd = new Random();
-            int bankAccountNumber = 0;
-            for (int i = 0; i < 5; i++)
+            string getBankAccountNumber = "";
+            int bankAccountNumber;
+            bool breakeLoop = true;
+            while (true)
             {
-                bankAccountNumber += rnd.Next(1, 10);
+                for (int i = 0; i < 5; i++)
+                {
+                    getBankAccountNumber += rnd.Next(1, 10);
+                }
+                bankAccountNumber = Convert.ToInt32(getBankAccountNumber);
+                if (bankAccList.Count >= 1)
+                {
+                    foreach (var accountNumber in bankAccList)
+                    {
+                        if (bankAccountNumber == accountNumber.BankAccountNumber)
+                        {
+                            breakeLoop = false;
+                        }
+                    }
+                }
+                if(saveAccList.Count >= 1)
+                {
+                    foreach (var accountNumber in saveAccList)
+                    {
+                        if (bankAccountNumber == accountNumber.BankAccountNumber)
+                        {
+                            breakeLoop = false;
+                        }
+                    }
+                }
+                if(breakeLoop == true)
+                {
+                    break;
+                }
             }
             return bankAccountNumber;
         }

@@ -10,7 +10,7 @@ namespace BankSimulatorV2
     {
         private double balance;
         private string bankAccountName;
-        private static int numberOfTransactions;
+        private int numberOfTransactions;
         private string saveAllTransActions = "";
         public string BankAccountName
         {

@@ -164,6 +164,7 @@ $$$$$$$$/ $$ |____    ______        $$$$$$$  |  ______   _______  $$ |   __
                         Console.WriteLine("---------------------------------------------");
                         Console.WriteLine("Exit Bank application, press 0");
                         Console.WriteLine("---------------------------------------------");
+                        admin.displayIdNumberInLogInClass();
                         Console.Write("\nEnter ID: ");
                         try
                         {
@@ -180,6 +181,7 @@ $$$$$$$$/ $$ |____    ______        $$$$$$$  |  ______   _______  $$ |   __
                     {
                         Console.WriteLine("Closing application..");
                         System.Threading.Thread.Sleep(1500);
+                        Environment.Exit(0);
                         break;
                     }
                     if (admin.VerifyUser(id) == true)

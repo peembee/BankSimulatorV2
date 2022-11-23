@@ -215,32 +215,55 @@ namespace BankSimulatorV2
 
             while (true)
             {
-                Console.Clear();
-                Console.Write("Customer ID: ");
-                try
+                bool breakLoop = true;
+                var customerList = bank.cloneCustomerList();                
+                while (true)
                 {
-                    id = Convert.ToInt32(Console.ReadLine());
-                    if (id.ToString().Length == 4 && this.id != id)
+                    Console.Clear();
+                    Console.Write("Customer ID: ");
+                    try
                     {
-                        break;
+                        id = Convert.ToInt32(Console.ReadLine());
+                        if (id.ToString().Length == 4 && this.id != id)
+                        {
+                            break;
+                        }
+                        else if (this.id == id)
+                        {
+                            Console.WriteLine("You can't have that ID-number");
+                            System.Threading.Thread.Sleep(1000);
+                        }
+                        else
+                        {
+                            Console.WriteLine("ID need to include 4 digit numbers");
+                            System.Threading.Thread.Sleep(1500);
+                        }
                     }
-                    else if(this.id == id)
+                    catch (Exception)
                     {
-                        Console.WriteLine("You can't have that ID-number");
-                        System.Threading.Thread.Sleep(1000);
-                    }
-                    else
-                    {
-                        Console.WriteLine("ID need to include 4 digit numbers");
-                        System.Threading.Thread.Sleep(1500);
+                        //do nothing
                     }
                 }
-                catch (Exception)
+                if(customerList.Count >= 1)
                 {
-                    //do nothing
+                    foreach (var customer in customerList)
+                    {
+                        if(id == customer.IdNumber)
+                        {
+                            breakLoop = false;
+                        }
+                    }
+                }
+                if(breakLoop == true)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Another customer already has that ID-Number");
+                    System.Threading.Thread.Sleep(1500);
                 }
             }
-            Console.Clear();
             Console.Write("Password: ");
             password = Console.ReadLine();
 
@@ -352,9 +375,23 @@ namespace BankSimulatorV2
             }
             return verified;
         }
+        public void displayIdNumberInLogInClass()
+        {
+            var customerList = bank.cloneCustomerList();
+            if(customerList.Count >=1)
+            {
+                Console.WriteLine("Customer ID's:");
+                foreach (var getCustomerId in customerList)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine(getCustomerId.IdNumber);                    
+                }
+                Console.WriteLine("------------");
+                Console.ResetColor();
+            }
+        }
         public string ReadPasswordTriesOrDecreasePasswordtries(int getId, bool readPasswordTries = false)
         {
-            Console.Clear();
             int userPasswordTries = 0;
             string returnLogInInfo = "";
             var updateCustomerList = bank.cloneCustomerList();
